@@ -14,13 +14,16 @@
   padding: 1rem;
   border: 1px solid #DADADA;
   margin: auto;
+  margin-top: 40px;
 }
 select:focus{
 outline : unset;
 }
-   .calculator h2 {
-    color: #F3572D;
-    font-size: 25px;
+.calculator h2 {
+ color: #F3572D;
+ font-size: 25px;
+ margin: 0px;
+ padding-bottom: 12px;
 }
 .inner_calculator {
     padding: 15px;
@@ -154,6 +157,7 @@ label.container.female {
   padding: 0 10px;
   line-height: 40px; /* Vertical center text */
   color: #ee5635;
+  pointer-events: none;
 }
 .inch_main,.foot_main {
     display: inline-block;
@@ -258,6 +262,12 @@ a.calculate.dis {
     color: red;
     font-size: 23px;
 }
+.result {
+    width: 500px;
+    margin: auto;
+    padding: 35px;
+    font-size: 20px;
+}
 </style>
 <body>
  <div class="calculator">
@@ -339,7 +349,7 @@ a.calculate.dis {
       <div class="weight_row">
       <div class="current_age_weight">
         <input type="text" placeholder="Current Weight" id="weight">
-        <span class="left_text">Kg</span>
+        <span class="left_text">lbs</span>
       </div>
     </div>
       <div class="button_row">
@@ -348,12 +358,13 @@ a.calculate.dis {
     </div>
     </div>
  </div>
+ <div class="result"></div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 
-var error,flag = false,radioVal,age,height_in_foot,height_in_inch,weight,height_in_cm,bmi,finalheight;
+var ageerror,weighterror,gendererror,heightinfooterror,heightincmerror,heightinincherror,flag = false,radioVal,age,height_in_foot,height_in_inch,weight,height_in_cm,bmi,finalheight;
 
 
 var $radioButtons = $('input[type="radio"]');
@@ -362,6 +373,10 @@ $radioButtons.click(function() {
         $(this).parent().toggleClass('checked11', this.checked);
     });
 });
+
+if($('.right_side ul li:nth-child(1)').hasClass('active')){
+  flag = true;
+}
 
 $('.eng').click(function(){
   if(!($('.eng').hasClass('active'))){
@@ -417,13 +432,14 @@ $('.calculate').click(function(){
   function checkradioVal(){
     radioVal = $('input[name="gender"]:checked').val();
     if ( radioVal == 'undefined' || radioVal == undefined){
-       error = true
+       gendererror = true
       $('.radio_error').html('Please select a gender.');
       return false;
     }
     else{
       $('.radio_error').html('');
-
+      gendererror = false;
+      checkStatus();
     }
   }
 
@@ -431,13 +447,14 @@ $('.calculate').click(function(){
   function checkHeightinfoot(){
     height_in_foot = $('#height_in_foot').val();
     if ( height_in_foot == '' || height_in_foot == 'undefined' || height_in_foot == null ){
-       error = true
+       heightinfooterror = true
       $('.height_in_foot_error').html('Please enter a value for feet.');
       return false;
     }
     else{
       $('.height_in_foot_error').html('');
-
+      heightinfooterror = false;
+      checkStatus();
     }
   }
 
@@ -445,26 +462,28 @@ $('.calculate').click(function(){
   function checkHeightininch(){
     height_in_inch = $('#height_in_inch').val();
     if ( height_in_inch == '' || height_in_inch == 'undefined' || height_in_inch == null ){
-       error = true
+       heightincmerror = true
       $('.height_in_inch_error').html('Please enter a value for inches.');
       return false;
     }
     else{
       $('.height_in_inch_error').html('');
-
+       heightincmerror = false;
+       checkStatus();
     }
   }
 
   function checkWeight(){
     weight = $('#weight').val();
     if ( weight == '' || weight == 'undefined' || weight == null ){
-       error = true
+       weighterror = true
       $('.weight_error').html('Please enter a valid current weight.');
       return false;
     }
     else{
       $('.weight_error').html('');
-
+      weighterror = false;
+      checkStatus();
     }
   }
 
@@ -472,13 +491,14 @@ $('.calculate').click(function(){
   function checkheight_in_cm(){
     height_in_cm = $('#height_in_cm').val();
     if ( height_in_cm == '' || height_in_cm == 'undefined' || height_in_cm == null ){
-       error = true
+       heightincmerror = true
       $('.height_in_cm_error').html('Please enter a valid height.');
       return false;
     }
     else{
       $('.height_in_cm_error').html('');
-
+      heightincmerror = false;
+      checkStatus();
     }
   }
 
@@ -486,18 +506,18 @@ $('.calculate').click(function(){
   function checkAge(){
     age = $('#age').val();
     if ( age == '' || age == 'undefined' || age == null ){
-       error = true
+       ageerror = true
       $('.age_error').html('Please enter a valid age');
       return false;
     }
     else{
       $('.age_error').html('');
-
+      ageerror = false;
+      checkStatus();
     }
   }
 
-   error = false;
-
+   ageerror=false,weighterror=false,gendererror=false,heightinfooterror=false,heightincmerror=false,heightinincherror=false
  console.log('flag',flag);
 
    checkradioVal();
@@ -511,7 +531,7 @@ $('.calculate').click(function(){
   }
    checkAge();
 console.log('aaa');
-   if(error == false){
+   if(ageerror==false && weighterror==false && gendererror==false && heightinfooterror==false && heightincmerror==false && heightinincherror==false){
      console.log('successsfull')
      $('.error').css('display','none');
      weight = $('#weight').val();
@@ -535,11 +555,28 @@ console.log('aaa');
 
      if(flag){
      bmi = [weight/finalheight]*703;
-     console.log('bmi',bmi)
+     bmi = bmi.toFixed(2);
+     console.log('bmi',bmi);
      }
      else{
-       bmi = [weight/height_in_cm]
+       bmi = [weight/height_in_cm];
+       bmi = bmi.toFixed(2);
        console.log('bmi',bmi)
+     }
+     if (bmi < 18.5){
+       $('.result').html('Based on your body mass index (BMI) of ' + bmi+', you are classed as obese.')
+     }
+     else if(bmi > 18.5 && bmi < 24.9){
+       $('.result').html('Based on your body mass index (BMI) of '+ bmi +', you have normal weight')
+     }
+     else if (bmi>25.0 && bmi<29.9) {
+       $('.result').html('Based on your body mass index (BMI) of '+ bmi +', you Overweight')
+     }
+     else if(bmi > 30.0 && bmi < 50){
+       $('.result').html('Based on your body mass index (BMI) of '+ bmi +', you Obese')
+     }
+     else{
+       $('.result').html('Based on your body mass index (BMI) of '+ bmi +', you Obese')
      }
    }
    else{
@@ -549,6 +586,17 @@ console.log('aaa');
      $('.calculate').attr("disabled","disabled");
    }
 })
+
+function checkStatus(){
+  console.log('chalala')
+  if(ageerror==false && weighterror==false && gendererror==false && heightinfooterror==false && heightincmerror==false && heightinincherror==false)
+  { console.log(ageerror,weighterror,gendererror,heightinfooterror,heightincmerror,heightinincherror)
+    $('.error').css('display','none');
+    $('.calculate').removeClass('dis')
+    $('.calculate').removeAttr('disabled');
+  }
+}
+
 
 </script>
 </html>
