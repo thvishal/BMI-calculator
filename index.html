@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+ <style>
+ .calculator {
+  width: 500px;
+  padding: 1rem;
+  border: 1px solid #DADADA;
+  margin: auto;
+}
+select:focus{
+outline : unset;
+}
+   .calculator h2 {
+    color: #F3572D;
+    font-size: 25px;
+}
+.inner_calculator {
+    padding: 15px;
+    background-color: #f9f7f2;
+}
+.heading , .gender_field{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+a:focus,a:active,a:hover,a {
+  text-decoration : none;
+}
+.second_line_fields {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.button_row {
+    display: flex;
+    width: 100%;
+}
+.gender_field .container{
+  display: block;
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+label.container {
+    width: 47.7%;
+    display: flex;
+    background: #e3e2e1;
+    padding: 7px;
+}
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkmark {
+  position: absolute;
+    top: 10px;
+    left: 13px;
+    height: 25px;
+    width: 25px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #fff;
+}
+label.container:hover {
+    background: rgba(243,87,45,.4);
+}
+label.container.male {
+    margin-left: 0px;
+}
+label.container.female {
+    margin-right: 0px;
+}
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "\f00c";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input ~ .checkmark:after {
+  display: block;
+}
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+    top: 6px;
+    left: 6px;
+    font: normal normal normal 14px/1 FontAwesome;
+    opacity: 0;
+}
+.container:hover .checkmark:after {
+    opacity: 0.3;
+}
+.container.checked11{
+  background-color: #547b85 !important;
+}
+.container.checked11 .checkmark:after{
+  opacity: 1 !important;
+}
+.foot_main select,.inch_main select{
+  /* Hide default arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Style the dropdown box */
+  width: 100%;
+  padding: 0 10px;
+}
+
+.foot_main,.inch_main {
+  position: relative;
+  max-width: 400px; /* optional */
+}
+
+.foot_main select, .foot_main::after,.inch_main select,.inch_main::after{
+  height: 41px;
+}
+.foot_main select,.inch_main select{
+  background-color: #fff;
+  border-radius: 0px;
+  color: #777;
+  border : 1px solid #DADADA;
+}
+.foot_main::after,.inch_main::after {
+  content: "\25bc"; /* HTML symbol */
+  /* Reposition */
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 10px;
+  line-height: 40px; /* Vertical center text */
+  color: #ee5635;
+}
+.inch_main,.foot_main {
+    display: inline-block;
+}
+.inch_main {
+    width: 100px;
+}
+.foot_main {
+    width: 177px;
+    float : left;
+}
+input {
+    height: 41px;
+    -webkit-appearance: none;
+    outline-width: 0;
+    width: 100%;
+    border: 1px solid #DADADA;
+    padding: .6rem .65rem;
+    color: #212121;
+}
+.left_text,.left_height_text {
+    position: absolute;
+    top: 10px;
+    display: block;
+    right: 6px;
+    color: #777;
+}
+.weight_row {
+    margin: 12px 0px;
+    width: 100%;
+}
+.current_age_weight {
+    width: 50%;
+    position: relative;
+}
+ul li{
+  list-style: none;
+  display: inline-block;
+}
+.button_row a {
+    background-color: #000;
+    color: #fff;
+    padding: 12px 40px;
+    font-size: 19px;
+}
+.button_row a:hover{
+  background-color:#496ECD
+}
+.english {
+    display: block;
+}
+.right_side ul li {
+    padding: 8px 15px;
+    font-size: 16px;
+    /* color: #000; */
+    border: 1px solid #DADADA;
+}
+.right_side ul li.active {
+    background-color: #000;
+}
+.right_side ul li.active a{
+    color: #fff;
+}
+.right_side ul li {
+    background-color: #fff;
+}
+.right_side ul li a {
+  color: #777;
+}
+.right_side ul li:nth-child(1) {
+    border-right: unset;
+}
+.rightside_fields {
+    width: 63%;
+    display: flex;
+    justify-content: flex-end;
+}
+.metric {
+    width: 72%;
+}
+a.calculate.dis {
+    opacity: .4;
+    color: rgba(255,255,255,.5);
+    cursor: default;
+    pointer-events: none;
+}
+.error {
+    background: #F9E5ED;
+    width: fit-content;
+    padding: 20px 20px 20px 46px;
+    position: relative;
+    display: none;
+}
+.error_sign {
+    position: absolute;
+    left: 11px;
+    top: 43%;
+    bottom: 0;
+    margin: auto;
+}
+.error_sign i {
+    color: red;
+    font-size: 23px;
+}
+</style>
+<body>
+ <div class="calculator">
+   <h2>Learn Your Body Mass Index (BMI)</h2>
+   <div class="error">
+     <div class="error_sign">
+       <i class="fa fa-warning"></i>
+     </div>
+     <div class="error_text">
+       <div class="radio_error"></div>
+       <div class="age_error"></div>
+       <div class="weight_error"></div>
+       <div class="height_in_cm_error"></div>
+       <div class="height_in_foot_error"></div>
+       <div class="height_in_inch_error"></div>
+     </div>
+   </div>
+    <div class="inner_calculator">
+      <div class="heading">
+      <div class="left_side">
+        <h4>About You</h4>
+      </div>
+      <div class="right_side">
+        <ul>
+          <li class="active eng" ><a href="javascript:void(0)">English</a></li><li class="Met"><a href="javascript:void(0)">Metric</a></li>
+        </ul>
+      </div>
+      <div class="gender_field">
+        <label class="container male">Male
+          <input type="radio"  name="gender" value="male">
+          <span class="checkmark"></span>
+         </label>
+        <label class="container female">Female
+           <input type="radio" name="gender" value="female">
+           <span class="checkmark"></span>
+       </label>
+      </div>
+      <div class="second_line_fields">
+        <div class="leftside_fields">
+          <input type="text" placeholder="Age" id="age">
+        </div>
+        <div class="rightside_fields">
+          <div class="english">
+            <div class="foot_main">
+           <select id="height_in_foot">
+            <option name="feet" value="" selected="selected" disabled="disabled">Height Ft.</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+           </select>
+          </div>
+          <div class="inch_main">
+          <select id="height_in_inch">
+            <option name="feet" value="" selected="selected" disabled="disabled">Inch</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+          </select>
+        </div>
+        </div>
+        <div class="metric" style="display:none;position:relative;">
+          <input type="text" placeholder="Height" id="height_in_cm">
+          <span class="left_height_text">Cm</span>
+        </div>
+       </div>
+      </div>
+      <div class="weight_row">
+      <div class="current_age_weight">
+        <input type="text" placeholder="Current Weight" id="weight">
+        <span class="left_text">Kg</span>
+      </div>
+    </div>
+      <div class="button_row">
+        <a href="javascript:void(0)" class="calculate">CALCULATE</a>
+      </div>
+    </div>
+    </div>
+ </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+
+var error,flag = false,radioVal,age,height_in_foot,height_in_inch,weight,height_in_cm,bmi,finalheight;
+
+
+var $radioButtons = $('input[type="radio"]');
+$radioButtons.click(function() {
+    $radioButtons.each(function() {
+        $(this).parent().toggleClass('checked11', this.checked);
+    });
+});
+
+$('.eng').click(function(){
+  if(!($('.eng').hasClass('active'))){
+    $('.right_side ul li').removeClass('active');
+    $(this).addClass('active')
+    $('.english').css('display','block');
+    $('.metric').css('display','none');
+    $('.left_text').html('Kg');
+    flag = true
+  }
+})
+
+$('.Met').click(function(){
+  if(!($('.Met').hasClass('active'))){
+    $('.right_side ul li').removeClass('active')
+    $(this).addClass('active')
+    $('.metric').css('display','block');
+    $('.english').css('display','none');
+    $('.left_text').html('lbs');
+    flag = false;
+  }
+})
+
+
+$('.calculate').click(function(){
+
+  $('input:radio[name="gender"]').change(function(){
+      checkradioVal();
+  });
+
+
+   $('#height_in_foot').change(function(){
+     checkHeightinfoot();
+   });
+
+   $('#height_in_inch').change(function(){
+     checkHeightininch();
+   });
+
+   $('#weight').keyup(function(){
+    checkWeight();
+   });
+
+   $('#height_in_cm').keyup(function(){
+    checkheight_in_cm();
+   });
+
+   $('#age').keyup(function(){
+    checkAge();
+   });
+
+
+  function checkradioVal(){
+    radioVal = $('input[name="gender"]:checked').val();
+    if ( radioVal == 'undefined' || radioVal == undefined){
+       error = true
+      $('.radio_error').html('Please select a gender.');
+      return false;
+    }
+    else{
+      $('.radio_error').html('');
+
+    }
+  }
+
+
+  function checkHeightinfoot(){
+    height_in_foot = $('#height_in_foot').val();
+    if ( height_in_foot == '' || height_in_foot == 'undefined' || height_in_foot == null ){
+       error = true
+      $('.height_in_foot_error').html('Please enter a value for feet.');
+      return false;
+    }
+    else{
+      $('.height_in_foot_error').html('');
+
+    }
+  }
+
+
+  function checkHeightininch(){
+    height_in_inch = $('#height_in_inch').val();
+    if ( height_in_inch == '' || height_in_inch == 'undefined' || height_in_inch == null ){
+       error = true
+      $('.height_in_inch_error').html('Please enter a value for inches.');
+      return false;
+    }
+    else{
+      $('.height_in_inch_error').html('');
+
+    }
+  }
+
+  function checkWeight(){
+    weight = $('#weight').val();
+    if ( weight == '' || weight == 'undefined' || weight == null ){
+       error = true
+      $('.weight_error').html('Please enter a valid current weight.');
+      return false;
+    }
+    else{
+      $('.weight_error').html('');
+
+    }
+  }
+
+
+  function checkheight_in_cm(){
+    height_in_cm = $('#height_in_cm').val();
+    if ( height_in_cm == '' || height_in_cm == 'undefined' || height_in_cm == null ){
+       error = true
+      $('.height_in_cm_error').html('Please enter a valid height.');
+      return false;
+    }
+    else{
+      $('.height_in_cm_error').html('');
+
+    }
+  }
+
+
+  function checkAge(){
+    age = $('#age').val();
+    if ( age == '' || age == 'undefined' || age == null ){
+       error = true
+      $('.age_error').html('Please enter a valid age');
+      return false;
+    }
+    else{
+      $('.age_error').html('');
+
+    }
+  }
+
+   error = false;
+
+ console.log('flag',flag);
+
+   checkradioVal();
+   if(flag){
+     checkHeightinfoot();
+     checkHeightininch();
+   }
+   checkWeight();
+  if(!flag){
+    checkheight_in_cm();
+  }
+   checkAge();
+console.log('aaa');
+   if(error == false){
+     console.log('successsfull')
+     $('.error').css('display','none');
+     weight = $('#weight').val();
+     console.log('weight',weight)
+     age = $('#age').val();
+     height_in_cm = $('#height_in_cm').val();
+     height_in_cm = height_in_cm/100;
+     console.log('height_in_cm',height_in_cm)
+     height_in_cm = height_in_cm*height_in_cm;
+     console.log('height_in_cm',height_in_cm)
+     height_in_inch = $('#height_in_inch').val();
+      height_in_inch = parseInt(height_in_inch);
+     height_in_foot = $('#height_in_foot').val();
+     height_in_foot = height_in_foot * 12;
+     height_in_foot = parseInt(height_in_foot)
+     console.log('height_in_foot',height_in_foot);
+     finalheight    = height_in_foot + height_in_inch;
+     console.log('finalheight',finalheight);
+     finalheight    = finalheight * finalheight;
+     console.log('finalheight',finalheight);
+
+     if(flag){
+     bmi = [weight/finalheight]*703;
+     console.log('bmi',bmi)
+     }
+     else{
+       bmi = [weight/height_in_cm]
+       console.log('bmi',bmi)
+     }
+   }
+   else{
+     console.log('error');
+     $('.error').css('display','block');
+     $('.calculate').addClass('dis')
+     $('.calculate').attr("disabled","disabled");
+   }
+})
+
+</script>
+</html>
